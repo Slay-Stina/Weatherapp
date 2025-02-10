@@ -4,7 +4,11 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            //Reader reader = new Reader();
+            //reader.ReadFile();
+            
+
+            RegExTester.RegExTest();
         }
     }
 }
