@@ -19,21 +19,21 @@ namespace Weatherapp
 
             string text = t.Result;
 
-            string pattern = @"(\d{4}-\d{2}-\d{2} (?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d),\w+,(\d{1,2}\.\d),(\d+)";
+            string pattern = @"(\d{4}-\d{2}-\d{2} (?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d),(\w+),(\d{1,2}\.\d),(\d+)";
 
             Regex temps = new Regex(pattern);
 
 
             MatchCollection matches = temps.Matches(text);
 
-            //TempEntity tempEntity = new TempEntity();
+            TempEntity tempEntity = new TempEntity();
 
-            //tempEntity.Date = DateTime.Parse(matches[0].Groups[1].Value);
-            //tempEntity.IsIndoor = matches[0].Groups[10].Value.ToLower() == "inne" ? true : false;
-            //tempEntity.Temperature = float.Parse(matches[0].Groups[11].Value.Replace('.', ','));
-            //tempEntity.Humidity = int.Parse(matches[0].Groups[12].Value);
+            tempEntity.Date = DateTime.Parse(matches[0].Groups[1].Value);
+            tempEntity.IsIndoor = matches[0].Groups[2].Value.ToLower() == "inne" ? true : false;
+            tempEntity.Temperature = float.Parse(matches[0].Groups[3].Value.Replace('.', ','));
+            tempEntity.Humidity = int.Parse(matches[0].Groups[4].Value);
 
-            //Console.WriteLine(tempEntity.Date + "\t" + tempEntity.Temperature + "\t" + tempEntity.IsIndoor + "\t" + tempEntity.Humidity);
+            Console.WriteLine(tempEntity.Date + "\t" + tempEntity.Temperature + "\t" + tempEntity.IsIndoor + "\t" + tempEntity.Humidity);
 
             using (var db = new WeatherDbContext())
             {
@@ -42,9 +42,9 @@ namespace Weatherapp
                     TempEntity newTempEntity = new TempEntity();
 
                     newTempEntity.Date = DateTime.Parse(match.Groups[1].Value);
-                    newTempEntity.IsIndoor = match.Groups[10].Value.ToLower() == "inne" ? true : false;
-                    newTempEntity.Temperature = float.Parse(match.Groups[11].Value.Replace('.', ','));
-                    newTempEntity.Humidity = int.Parse(match.Groups[12].Value);
+                    newTempEntity.IsIndoor = match.Groups[2].Value.ToLower() == "inne" ? true : false;
+                    newTempEntity.Temperature = float.Parse(match.Groups[3].Value.Replace('.', ','));
+                    newTempEntity.Humidity = int.Parse(match.Groups[4].Value);
 
                     Console.WriteLine(newTempEntity.Date + "\t" + newTempEntity.Temperature + "\t" + newTempEntity.IsIndoor + "\t" + newTempEntity.Humidity);
 
