@@ -19,39 +19,40 @@ namespace Weatherapp
 
             string text = t.Result;
 
-            string pattern = @"(((\d{4})-(\d{2})-(\d{2})) ((\d{2}):(\d{2}):(\d{2}))),(\w+),\s*?(\d{1,2}.\d),(\d+)";
+            string pattern = @"(\d{4}-\d{2}-\d{2} (?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d),\w+,(\d{1,2}\.\d),(\d+)";
 
             Regex temps = new Regex(pattern);
 
 
             MatchCollection matches = temps.Matches(text);
 
-            TempEntity tempEntity = new TempEntity();
+            //TempEntity tempEntity = new TempEntity();
 
-            tempEntity.Date = DateTime.Parse(matches[0].Groups[1].Value);
-            tempEntity.IsIndoor = matches[0].Groups[10].Value.ToLower() == "inne" ? true : false;
-            tempEntity.Temperature = float.Parse(matches[0].Groups[11].Value.Replace('.', ','));
-            tempEntity.Humidity = int.Parse(matches[0].Groups[12].Value);
+            //tempEntity.Date = DateTime.Parse(matches[0].Groups[1].Value);
+            //tempEntity.IsIndoor = matches[0].Groups[10].Value.ToLower() == "inne" ? true : false;
+            //tempEntity.Temperature = float.Parse(matches[0].Groups[11].Value.Replace('.', ','));
+            //tempEntity.Humidity = int.Parse(matches[0].Groups[12].Value);
 
-            Console.WriteLine(tempEntity.Date + "\t" + tempEntity.Temperature + "\t" + tempEntity.IsIndoor + "\t" + tempEntity.Humidity);
-            Console.ReadKey();
+            //Console.WriteLine(tempEntity.Date + "\t" + tempEntity.Temperature + "\t" + tempEntity.IsIndoor + "\t" + tempEntity.Humidity);
 
-            //using(var db = new WeatherDbContext())
-            //{
-            //    foreach (Match match in matches)
-            //    {
-            //        TempEntity tempEntity = new TempEntity();
+            using (var db = new WeatherDbContext())
+            {
+                foreach (Match match in matches)
+                {
+                    TempEntity newTempEntity = new TempEntity();
 
-            //        tempEntity.Date = DateTime.Parse(match.Groups[1].Value);
-            //        tempEntity.IsIndoor = match.Groups[10].Value.ToLower() == "inne" ? true : false;
-            //        tempEntity.Temperature = float.Parse(match.Groups[11].Value.Replace('.', ','));
-            //        tempEntity.Humidity = int.Parse(match.Groups[12].Value);
+                    newTempEntity.Date = DateTime.Parse(match.Groups[1].Value);
+                    newTempEntity.IsIndoor = match.Groups[10].Value.ToLower() == "inne" ? true : false;
+                    newTempEntity.Temperature = float.Parse(match.Groups[11].Value.Replace('.', ','));
+                    newTempEntity.Humidity = int.Parse(match.Groups[12].Value);
 
-            //        db.Add(tempEntity);
+                    Console.WriteLine(newTempEntity.Date + "\t" + newTempEntity.Temperature + "\t" + newTempEntity.IsIndoor + "\t" + newTempEntity.Humidity);
 
-            //    }
-            //    db.SaveChanges();
-            //}
+                    db.Add(newTempEntity);
+
+                }
+                db.SaveChanges();
+            }
         }
     }
 }
