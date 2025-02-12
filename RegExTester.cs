@@ -11,7 +11,7 @@ namespace Weatherapp
 {
     internal class RegExTester
     {
-        public static void RegExTest()
+        public static void TempToDB()
         {
             Console.WriteLine("TEMPERATURER");
             string filepath = "..\\..\\..\\Data\\tempdata5-med fel.txt";
@@ -25,15 +25,6 @@ namespace Weatherapp
 
 
             MatchCollection matches = temps.Matches(text);
-
-            TempEntity tempEntity = new TempEntity();
-
-            tempEntity.Date = DateTime.Parse(matches[0].Groups[1].Value);
-            tempEntity.IsIndoor = matches[0].Groups[2].Value.ToLower() == "inne" ? true : false;
-            tempEntity.Temperature = float.Parse(matches[0].Groups[3].Value.Replace('.', ','));
-            tempEntity.Humidity = int.Parse(matches[0].Groups[4].Value);
-
-            Console.WriteLine(tempEntity.Date + "\t" + tempEntity.Temperature + "\t" + tempEntity.IsIndoor + "\t" + tempEntity.Humidity);
 
             using (var db = new WeatherDbContext())
             {
