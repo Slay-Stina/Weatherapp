@@ -1,4 +1,6 @@
-﻿namespace Weatherapp
+﻿using Weatherapp.Models;
+
+namespace Weatherapp
 {
     internal class Program
     {
@@ -10,5 +12,7 @@
 
             RegExTester.RegExTest();
         }
+
+        
     }
 }
