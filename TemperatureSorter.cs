@@ -2,18 +2,13 @@
 using System.Linq;
 using Weatherapp.Models;
 
-namespace Weatherapp
+namespace Weatherapp;
+
+public class TemperatureSorter
 {
-    public class TemperatureSorter
+    public static void ShowSortedTemps(bool sorteringVarmastFörst)
     {
-        private readonly WeatherDbContext db; // Använd din databas-kontroll här
-
-        public TemperatureSorter(WeatherDbContext dbContext)
-        {
-            db = dbContext;
-        }
-
-        public void VisaSorteradeMedeltemperaturer(bool sorteringVarmastFörst)
+        using (var db = new WeatherDbContext())
         {
             var averageTemperaturesByDay = db.TempEntities
                 .GroupBy(t => t.Date.Date)

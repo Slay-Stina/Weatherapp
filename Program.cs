@@ -8,9 +8,9 @@ namespace Weatherapp
         {
             //Reader reader = new Reader();
             //reader.ReadFile();
-            
+            //RegExTester.RegExTest();
+            TemperatureSorter.ShowSortedTemps(true);
 
-            RegExTester.RegExTest();
         }
 
         
