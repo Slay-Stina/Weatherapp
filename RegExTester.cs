@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Weatherapp.Models;
 using System.IO;
+using Weatherapp.Extensions;
 
 namespace Weatherapp
 {
