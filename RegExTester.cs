@@ -30,17 +30,11 @@ namespace Weatherapp
             {
                 foreach (Match match in matches)
                 {
-                    TempEntity newTempEntity = new TempEntity();
+                    TempEntity newTemp = match.ToTempEntity();
 
-                    newTempEntity.Date = DateTime.Parse(match.Groups[1].Value);
-                    newTempEntity.IsIndoor = match.Groups[2].Value.ToLower() == "inne" ? true : false;
-                    newTempEntity.Temperature = float.Parse(match.Groups[3].Value.Replace('.', ','));
-                    newTempEntity.Humidity = int.Parse(match.Groups[4].Value);
+                    newTemp.PrintTemp();
 
-                    Console.WriteLine(newTempEntity.Date + "\t" + newTempEntity.Temperature + "\t" + newTempEntity.IsIndoor + "\t" + newTempEntity.Humidity);
-
-                    db.Add(newTempEntity);
-
+                    db.Add(newTemp);
                 }
                 db.SaveChanges();
             }
