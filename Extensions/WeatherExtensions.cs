@@ -31,7 +31,7 @@ internal static class WeatherExtensions
             return "Hög risk";
         }
     }
-    public static TempEntity ToTempEntity(this Match match)
+    public static TempEntity ToTempEntity(this Match match, RegExTester.MoldRiskCalculator calcMold)
     {
         try
         {
@@ -41,6 +41,7 @@ internal static class WeatherExtensions
             newTempEntity.IsIndoor = match.Groups[2].Value.ToLower() == "inne" ? true : false;
             newTempEntity.Temperature = float.Parse(match.Groups[3].Value.Replace('.', ','));
             newTempEntity.Humidity = int.Parse(match.Groups[4].Value);
+            newTempEntity.MoldRisk = calcMold(newTempEntity);
 
             return newTempEntity;
         }

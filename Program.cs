@@ -7,6 +7,7 @@ namespace Weatherapp
     {
         static void Main(string[] args)
         {
+            RegExTester.TempToDB();
             TempEntity.PrintMoldRisk();
         }
     }

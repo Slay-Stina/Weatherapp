@@ -12,6 +12,8 @@ namespace Weatherapp
 {
     internal class RegExTester
     {
+        public delegate float MoldRiskCalculator(TempEntity tempEntity);
+
         public static void TempToDB()
         {
             Console.WriteLine("TEMPERATURER");
@@ -29,9 +31,11 @@ namespace Weatherapp
 
             using (var db = new WeatherDbContext())
             {
+                MoldRiskCalculator calcMold = MyDelegates.CalculateMoldRisk;
+
                 foreach (Match match in matches)
                 {
-                    TempEntity newTemp = match.ToTempEntity();
+                    TempEntity newTemp = match.ToTempEntity(calcMold);
 
                     newTemp.PrintTemp();
 
