@@ -1,6 +1,3 @@
-﻿using Weatherapp.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 namespace Weatherapp
 {
     internal class Program
@@ -9,6 +6,9 @@ namespace Weatherapp
         {
             RegExTester.TempToDB();
             TempEntity.PrintMoldRisk();
+            TemperatureSorter.ShowSortedTemps(true);
         }
+
+        
     }
 }
