@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Weatherapp.Models;
 using System.IO;
+using Weatherapp.Extensions;
 
 namespace Weatherapp
 {
     internal class RegExTester
     {
-        public static void RegExTest()
+        public delegate float MoldRiskCalculator(TempEntity tempEntity);
+
+        public static void TempToDB()
         {
             Console.WriteLine("TEMPERATURER");
             string filepath = "..\\..\\..\\Data\\tempdata5-med fel.txt";
@@ -26,30 +29,17 @@ namespace Weatherapp
 
             MatchCollection matches = temps.Matches(text);
 
-            TempEntity tempEntity = new TempEntity();
-
-            tempEntity.Date = DateTime.Parse(matches[0].Groups[1].Value);
-            tempEntity.IsIndoor = matches[0].Groups[2].Value.ToLower() == "inne" ? true : false;
-            tempEntity.Temperature = float.Parse(matches[0].Groups[3].Value.Replace('.', ','));
-            tempEntity.Humidity = int.Parse(matches[0].Groups[4].Value);
-
-            Console.WriteLine(tempEntity.Date + "\t" + tempEntity.Temperature + "\t" + tempEntity.IsIndoor + "\t" + tempEntity.Humidity);
-
             using (var db = new WeatherDbContext())
             {
+                MoldRiskCalculator calcMold = MyDelegates.CalculateMoldRisk;
+
                 foreach (Match match in matches)
                 {
-                    TempEntity newTempEntity = new TempEntity();
+                    TempEntity newTemp = match.ToTempEntity(calcMold);
 
-                    newTempEntity.Date = DateTime.Parse(match.Groups[1].Value);
-                    newTempEntity.IsIndoor = match.Groups[2].Value.ToLower() == "inne" ? true : false;
-                    newTempEntity.Temperature = float.Parse(match.Groups[3].Value.Replace('.', ','));
-                    newTempEntity.Humidity = int.Parse(match.Groups[4].Value);
+                    newTemp.PrintTemp();
 
-                    Console.WriteLine(newTempEntity.Date + "\t" + newTempEntity.Temperature + "\t" + newTempEntity.IsIndoor + "\t" + newTempEntity.Humidity);
-
-                    db.Add(newTempEntity);
-
+                    db.Add(newTemp);
                 }
                 db.SaveChanges();
             }

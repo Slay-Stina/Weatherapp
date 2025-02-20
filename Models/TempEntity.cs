@@ -3,23 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Weatherapp.Extensions;
 
-namespace Weatherapp.Models
+namespace Weatherapp.Models;
+
+internal class TempEntity
 {
-    internal class TempEntity
+    public int Id { get; set; }
+    public float Temperature { get; set; }
+    public DateTime Date { get; set; }
+    public bool IsIndoor { get; set; }
+    public int Humidity { get; set; }
+    public float MoldRisk { get; set; }
+
+    public void PrintTemp()
     {
-        public int Id { get; set; }
-        public float Temperature { get; set; }
+        Console.WriteLine($"{Date}\t{Temperature}\t{IsIndoor}\t{Humidity}\t{MoldRisk:P1}");
+    }
+    public static void PrintMoldRisk()
+    {
+        //RegExTester.TempToDB();
 
-        public DateTime Date { get; set; }
-
-        public bool IsIndoor { get; set; }
-
-        public int Humidity { get; set; }
-
-
-
-        
-
+        using (var db = new WeatherDbContext())
+        {
+            foreach (var entity in db.TempEntities.OrderByDescending(t => t.MoldRisk))
+            {
+                Console.WriteLine($"{entity.Date}: {(entity.IsIndoor ? "Inomhus" : "Utomhus")}, Temp: {entity.Temperature}°C, LF: {entity.Humidity}%");
+                Console.WriteLine($"Mögelrisk: {entity.MoldRisk:F2}, Risknivå: {entity.ClassifyMoldRisk()}");
+                Console.WriteLine();
+            }
+            //db.SaveChanges();
+        }
     }
 }

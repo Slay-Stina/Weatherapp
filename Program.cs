@@ -1,9 +1,10 @@
-﻿namespace Weatherapp
+namespace Weatherapp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+ Anton
             //Reader reader = new Reader();
             //reader.ReadFile();
 
@@ -23,6 +24,13 @@
             analyzer.GetDailyAverageTemperature(tempDate);
 
             analyzer.SortDaysByHumidity();
+=======
+            RegExTester.TempToDB();
+            TempEntity.PrintMoldRisk();
+            TemperatureSorter.ShowSortedTemps(true);
+ master
         }
+
+        
     }
 }
