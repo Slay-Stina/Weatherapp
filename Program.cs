@@ -1,17 +1,11 @@
+using Weatherapp.Models;
+
 namespace Weatherapp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
- Anton
-            //Reader reader = new Reader();
-            //reader.ReadFile();
-
-            //Weather.FindWinter("..\\..\\..\\Data\\tempdata5-med fel.txt");
-
-            //RegExTester.RegExTest();
-
             string filePath = "..\\..\\..\\Data\\tempdata5-med fel.txt";
             WeatherDataAnalyzer analyzer = new WeatherDataAnalyzer(filePath);
 
@@ -24,13 +18,11 @@ namespace Weatherapp
             analyzer.GetDailyAverageTemperature(tempDate);
 
             analyzer.SortDaysByHumidity();
-=======
-            RegExTester.TempToDB();
-            TempEntity.PrintMoldRisk();
-            TemperatureSorter.ShowSortedTemps(true);
- master
-        }
 
-        
+            //RegExTester.TempToDB();
+            TempEntity.PrintMoldRisk();
+
+            TemperatureSorter.ShowSortedTemps(true);
+        }
     }
 }
