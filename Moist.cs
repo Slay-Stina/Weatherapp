@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel.Design;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Weatherapp.Models;
 
@@ -13,19 +14,10 @@ internal class Moist
         Task<string> t = File.ReadAllTextAsync(filepath);
         string text = t.Result;
 
-        Console.WriteLine("\nVälj en funktion:");
-        Console.WriteLine("1: Medeltemperatur och luftfuktighet per dag för valt datum");
-        Console.WriteLine("2: Sortering av dagar från torrast till fuktigast");
-        Console.WriteLine("3: Datum för meteorologisk vinter (mild vinter)");
-        Console.WriteLine("4: Datum för meteorologisk höst");
-        Console.WriteLine("5: Sortering av dagar medeltemperatur varmast till kallast");
-        Console.WriteLine("6: Mögelrisk per dag");
-        Console.WriteLine("7: Läs in textfil till databas");
-        Console.WriteLine("0: Avsluta");
-
         int choice;
         do
         {
+            ShowMenu();
             Console.Write("\nAnge ditt val: ");
             if (int.TryParse(Console.ReadLine(), out choice))
             {
@@ -65,6 +57,20 @@ internal class Moist
                 Console.WriteLine("Felaktig inmatning, försök igen.");
             }
         } while (choice != 0);
+    }
+
+    //Meny
+    public static void ShowMenu()
+    {
+        Console.WriteLine("\nVälj en funktion:");
+        Console.WriteLine("1: Medeltemperatur och luftfuktighet per dag för valt datum");
+        Console.WriteLine("2: Sortering av dagar från torrast till fuktigast");
+        Console.WriteLine("3: Datum för meteorologisk vinter (mild vinter)");
+        Console.WriteLine("4: Datum för meteorologisk höst");
+        Console.WriteLine("5: Sortering av dagar medeltemperatur varmast till kallast");
+        Console.WriteLine("6: Mögelrisk per dag");
+        Console.WriteLine("7: Läs in textfil till databas");
+        Console.WriteLine("0: Avsluta");
     }
 
     // 1.Medeltemperatur och luftfuktighet per dag för valt datum
