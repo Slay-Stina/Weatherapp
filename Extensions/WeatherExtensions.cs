@@ -18,11 +18,11 @@ internal static class WeatherExtensions
                 (tempEnt.Temperature < 5 ? " - För kallt" : "") +
                 (tempEnt.Humidity < 80 ? " - För låg LF" : "");
         }
-        else if (tempEnt.MoldRisk <= 1)
+        else if (tempEnt.MoldRisk <= 20)
         {
             return "Låg risk";
         }
-        else if (tempEnt.MoldRisk <= 3)
+        else if (tempEnt.MoldRisk <= 50)
         {
             return "Måttlig risk";
         }

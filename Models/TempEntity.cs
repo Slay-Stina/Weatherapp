@@ -26,11 +26,20 @@ internal class TempEntity
 
         using (var db = new WeatherDbContext())
         {
-            foreach (var entity in db.TempEntities.OrderByDescending(t => t.MoldRisk))
+            foreach (var entity in db.TempEntities
+                                    .GroupBy(g => g.Date.Date)
+                                    .Select(e => new TempEntity
+                                    {
+                                        Date = e.Key,
+                                        MoldRisk = e.Average(g => g.MoldRisk)
+                                    })
+                                    .OrderByDescending(t => t.MoldRisk))
             {
-                Console.WriteLine($"{entity.Date}: {(entity.IsIndoor ? "Inomhus" : "Utomhus")}, Temp: {entity.Temperature}°C, LF: {entity.Humidity}%");
-                Console.WriteLine($"Mögelrisk: {entity.MoldRisk:F2}, Risknivå: {entity.ClassifyMoldRisk()}");
-                Console.WriteLine();
+                //Console.WriteLine($"{entity.Date}: {(entity.IsIndoor ? "Inomhus" : "Utomhus")}, Temp: {entity.Temperature}°C, LF: {entity.Humidity}%");
+                //Console.WriteLine($"Mögelrisk: {entity.MoldRisk:F2}, Risknivå: {entity.ClassifyMoldRisk()}");
+                Console.WriteLine($"{entity.Date:d}\t" +
+                   $"{entity.MoldRisk:F2}%\t" +
+                   $"{entity.ClassifyMoldRisk()}");
             }
             //db.SaveChanges();
         }

@@ -35,7 +35,7 @@ public class TemperatureSorter
             Console.WriteLine("Sortering av dagar baserat på medeltemperatur:");
             foreach (var data in averageTemperaturesByDay)
             {
-                Console.WriteLine($"Datum: {data.Date.ToShortDateString()}, Medeltemp: {data.AverageTemperature}");
+                Console.WriteLine($"Datum: {data.Date.ToShortDateString()}, Medeltemp: {data.AverageTemperature:F1}");
             }
         }
     }

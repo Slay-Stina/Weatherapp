@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using Weatherapp.Models;
 
 namespace Weatherapp;
 
@@ -22,6 +18,9 @@ internal class Moist
         Console.WriteLine("2: Sortering av dagar från torrast till fuktigast");
         Console.WriteLine("3: Datum för meteorologisk vinter (mild vinter)");
         Console.WriteLine("4: Datum för meteorologisk höst");
+        Console.WriteLine("5: Sortering av dagar medeltemperatur varmast till kallast");
+        Console.WriteLine("6: Mögelrisk per dag");
+        Console.WriteLine("7: Läs in textfil till databas");
         Console.WriteLine("0: Avsluta");
 
         int choice;
@@ -43,6 +42,15 @@ internal class Moist
                         break;
                     case 4:
                         GetMeteorologicalAutumn(text);
+                        break;
+                    case 5:
+                        TemperatureSorter.ShowSortedTemps(true);
+                        break;
+                    case 6:
+                        TempEntity.PrintMoldRisk();
+                        break;
+                    case 7:
+                        RegExTester.TempToDB();
                         break;
                     case 0:
                         Console.WriteLine("Programmet avslutas.");
